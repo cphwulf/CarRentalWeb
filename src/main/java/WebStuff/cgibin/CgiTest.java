@@ -4,7 +4,6 @@ public class CgiTest {
 		String opts = System.getProperty("query_string");
 		String type = "Content-Type: text/html\n\n";
 		String output = "<html>" +
-			"<meta http-equiv=\"Refresh\" content=\"1; url=http://team2.netfarmers.dk\">" +
 			"<p>Kurt Verner Bor her </p>" +
 			"<p>opt: " +  opts + "</p>" +
 			"<p>Hi there </p>" +
