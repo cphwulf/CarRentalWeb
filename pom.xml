@@ -34,53 +34,6 @@
         </plugin>
         <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
         <plugin>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>3.0.2</version>
-          <executions>
-            <execution>
-		                <id>copy-resources</id>
-                <!-- here the phase you need -->
-              <phase>validate</phase>
-              <goals>
-                <goal>copy-resources</goal>
-              </goals>
-              <configuration>
-                <outputDirectory>${project.basedir}/target/</outputDirectory>
-                <resources>          
-                  <resource>
-                    <directory>src/main/java/WebStuff/cgibin/</directory>
-                    <includes>
-                      <include>*.jar</include>
-                    </includes>
-                    <filtering>true</filtering>
-                  </resource>
-                </resources>              
-              </configuration>            
-            </execution>
-            <execution>
-              <id>copy-resources2</id>
-                <!-- here the phase you need -->
-              <phase>validate</phase>
-              <goals>
-                <goal>copy-resources</goal>
-              </goals>
-              <configuration>
-                <outputDirectory>${project.basedir}/target/classes/WebStuff</outputDirectory>
-                <resources>          
-                  <resource>
-                    <directory>src/main/java/WebStuff</directory>
-                    <includes>
-                      <include>**/*.sh</include>
-                      <include>**/*.html</include>
-                    </includes>
-                    <filtering>true</filtering>
-                  </resource>
-                </resources>              
-              </configuration>            
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.8.0</version>
         </plugin>
@@ -122,19 +75,66 @@
                 <executions>
                     <execution>
                         <id>build</id>
-                        <phase>compile</phase>
+                        <phase>test</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
                         <configuration>
                             <target>
                                 <echo>run chmod in ${basedir}</echo>
-                                <chmod file="${project.basedir}/target/CarRentalWeb-0.0.1.jar" perm="ugo+rx"/>
+                                <chmod file="${project.basedir}/target/classes/WebStuff/cgibin/CarRentalWeb-0.0.1.jar" perm="ugo+rx"/>
                             </target>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+	            <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.0.2</version>
+          <executions>
+            <execution>
+		                <id>copy-resources</id>
+                <!-- here the phase you need -->
+              <phase>package</phase>
+              <goals>
+                <goal>copy-resources</goal>
+              </goals>
+              <configuration>
+                <outputDirectory>${project.basedir}/target/classes/WebStuff/cgibin</outputDirectory>
+                <resources>          
+                  <resource>
+                    <directory>${project.basedir}/target/</directory>
+                    <includes>
+                      <include>*.jar</include>
+                    </includes>
+                    <filtering>true</filtering>
+                  </resource>
+                </resources>              
+              </configuration>            
+            </execution>
+            <execution>
+              <id>copy-resources2</id>
+                <!-- here the phase you need -->
+              <phase>install</phase>
+              <goals>
+                <goal>copy-resources</goal>
+              </goals>
+              <configuration>
+                <outputDirectory>${project.basedir}/target/classes/WebStuff</outputDirectory>
+                <resources>          
+                  <resource>
+                    <directory>src/main/java/WebStuff</directory>
+                    <includes>
+                      <include>**/*.sh</include>
+                      <include>**/*.html</include>
+                    </includes>
+                    <filtering>true</filtering>
+                  </resource>
+                </resources>              
+              </configuration>            
+            </execution>
+          </executions>
+        </plugin>
         <plugin>
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
