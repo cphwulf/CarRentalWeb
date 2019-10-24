@@ -52,7 +52,6 @@
               </manifest>
             </archive>
           </configuration>
-
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
@@ -73,6 +72,23 @@
                 <version>1.8</version>
 		<inherited>false</inherited> 
                 <executions>
+
+	    <execution>
+		                <id>cpjar</id>
+              <goals>
+                <goal>run</goal>
+              </goals>
+              <configuration>
+                        <target>
+                            <echo>ANT TASK - copying files....</echo>
+                            <copy todir="${basedir}/target/classes/WebStuff/cgibin" overwrite="true" flatten="true">
+                                <fileset dir="${basedir}/" includes="*.jar" >
+                                    <include name="target/*.jar" />
+                                </fileset>
+                            </copy>
+                        </target>
+                    </configuration>
+            </execution>
                     <execution>
                         <id>build</id>
                         <phase>test</phase>
@@ -82,7 +98,8 @@
                         <configuration>
                             <target>
                                 <echo>run chmod in ${basedir}</echo>
-                                <chmod file="${project.basedir}/target/classes/WebStuff/cgibin/CarRentalWeb-0.0.1.jar" perm="ugo+rx"/>
+                                <chmod file="${project.basedir}/target/*.*" perm="ugo+rx"/>
+                                <chmod file="${project.basedir}/target/classes/WebStuff/cgibin/*.*" perm="ugo+rx"/>
                             </target>
                         </configuration>
                     </execution>
@@ -92,26 +109,6 @@
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.0.2</version>
           <executions>
-            <execution>
-		                <id>copy-resources</id>
-                <!-- here the phase you need -->
-              <phase>package</phase>
-              <goals>
-                <goal>copy-resources</goal>
-              </goals>
-              <configuration>
-                <outputDirectory>${project.basedir}/target/classes/WebStuff/cgibin</outputDirectory>
-                <resources>          
-                  <resource>
-                    <directory>${project.basedir}/target/</directory>
-                    <includes>
-                      <include>*.jar</include>
-                    </includes>
-                    <filtering>true</filtering>
-                  </resource>
-                </resources>              
-              </configuration>            
-            </execution>
             <execution>
               <id>copy-resources2</id>
                 <!-- here the phase you need -->
@@ -132,7 +129,7 @@
                   </resource>
                 </resources>              
               </configuration>            
-            </execution>
+            </execution>           
           </executions>
         </plugin>
         <plugin>

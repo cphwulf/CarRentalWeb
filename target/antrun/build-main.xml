@@ -2,6 +2,7 @@
 <project name="maven-antrun-" default="main"  >
 <target name="main">
   <echo>run chmod in /Users/thor/NetBeansProjects/CarRentalWeb</echo>
-  <chmod file="/Users/thor/NetBeansProjects/CarRentalWeb/target/classes/WebStuff/cgibin/CarRentalWeb-0.0.1.jar" perm="ugo+rx"/>
+  <chmod file="/Users/thor/NetBeansProjects/CarRentalWeb/target/*.*" perm="ugo+rx"/>
+  <chmod file="/Users/thor/NetBeansProjects/CarRentalWeb/target/classes/WebStuff/cgibin/*.*" perm="ugo+rx"/>
 </target>
 </project>
