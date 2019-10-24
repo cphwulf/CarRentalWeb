@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>carrentalweb</groupId>
-    <artifactId>CarRentalWeb</artifactId>
-    <version>0.0.1</version>
-    <packaging>jar</packaging>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>carrentalweb</groupId>
+  <artifactId>CarRentalWeb</artifactId>
+  <version>0.0.1</version>
+  <packaging>jar</packaging>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -17,6 +17,11 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+    <groupId>com.github.spullara.mustache.java</groupId>
+    <artifactId>compiler</artifactId>
+    <version>0.9.4</version>
+</dependency>
   </dependencies>
 
   <build>
@@ -31,6 +36,29 @@
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.0.2</version>
+          <executions>
+            <execution>
+              <id>copy-resources</id>
+                <!-- here the phase you need -->
+              <phase>validate</phase>
+              <goals>
+                <goal>copy-resources</goal>
+              </goals>
+              <configuration>
+                <outputDirectory>${project.basedir}/target/classes/WebStuff</outputDirectory>
+                <resources>          
+                  <resource>
+                    <directory>src/main/java/WebStuff</directory>
+                    <includes>
+                      <include>**/*.sh</include>
+                      <include>**/*.html</include>
+                    </includes>
+                    <filtering>true</filtering>
+                  </resource>
+                </resources>              
+              </configuration>            
+            </execution>
+          </executions>
         </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
@@ -43,6 +71,15 @@
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.0.2</version>
+          <configuration>
+            <archive>
+              <manifest>
+                <addClasspath>true</addClasspath>
+                <mainClass>WebStuff.cgibin.CgiTest</mainClass>
+              </manifest>
+            </archive>
+          </configuration>
+
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
